@@ -43,9 +43,10 @@ if __name__=="__main__":
             text=re.sub(r"^#\s*text\s*=\s*","",text)
             tokens=[cols[FORM] for cols in tree if cols[ID].isnumeric()]
 
-            text=" ".join(c.replace(" ","<space>") for c in text[:args.max_seq_length])
-            print(text,file=f_src)
-
+            text=" ".join(c.replace(" ","<>") for c in text[:args.max_seq_length])
             tokens=[" ".join(t) for t in tokens][:args.max_seq_length]
-            print(" <space> ".join(tokens),file=f_trg)
+            tokens=" <> ".join(tokens)
+            if len(text)<2*args.max_seq_length and len(tokens)<2*args.max_seq_length:
+                print(text,file=f_src)
+                print(tokens,file=f_trg)
             
